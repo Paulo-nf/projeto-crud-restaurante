@@ -1,14 +1,9 @@
 import CRUD_Exemplo as exemplo
 import os
+from cor import Cor
 
-class Cor:
-    TEXTO = '\033[94m'
-    LINHA = '\033[96m'
-    RESET = '\033[0m' # reseta Cor no terminal
-
-
-def linha_horizontal(cor_linha):
-    print(cor_linha + "=" * 55 + Cor.RESET)
+def linha_horizontal():
+    print(Cor.LINHA + "=" * 55 + Cor.RESET)
 
 def limpar_terminal():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -16,7 +11,7 @@ def limpar_terminal():
 
 def menu_inicial():
     limpar_terminal()
-    linha_horizontal(Cor.LINHA)
+    linha_horizontal()
     print(Cor.TEXTO + "BEM VINDO AO SISTEMA RESTAURANTE SOLUTIONS™")
     print("""
     1 - MÓDULO MESAS
@@ -31,11 +26,11 @@ def main():
     while True:
         limpar_terminal()
         menu_inicial()
-        linha_horizontal(Cor.LINHA)
-        opcao_inicial = int(input("INFORME SUA OPÇÃO: "))
+        linha_horizontal()
+        opcao_inicial = int(input(Cor.TEXTO + "INFORME SUA OPÇÃO: " + Cor.RESET))
         limpar_terminal()
 
-        linha_horizontal(Cor.LINHA)
+        linha_horizontal()
 
         match opcao_inicial:
             case 1:
@@ -50,10 +45,10 @@ def main():
             case 4:
                 while True:
                     limpar_terminal()
-                    linha_horizontal(Cor.LINHA)
-                    print(Cor.TEXTO + exemplo.menu() + Cor.RESET)
-                    linha_horizontal(Cor.LINHA)
-                    opcao = input("INFORME SUA OPÇÃO: ")
+                    linha_horizontal()
+                    exemplo.menu()
+                    linha_horizontal()
+                    opcao = input(Cor.TEXTO + "INFORME SUA OPÇÃO: " + Cor.RESET)
 
                     if opcao == "1":
                         nome = input("DIGITE O NOME: ")
@@ -68,22 +63,22 @@ def main():
                         nova_idade = input("DIGITE A NOVA IDADE: ")
                         exemplo.atualizar_usuario(nome_antigo, novo_nome, nova_idade)
                     elif opcao == "4":
-                        nome = input("DIGITE O NOME DO USUÁRIO A SER EXCLUÍDO:\n>>>")
+                        nome = input("DIGITE O NOME DO USUÁRIO A SER EXCLUÍDO: ")
                         exemplo.excluir_usuario(nome)
                     elif opcao == "5":
-                        nome = input("DIGITE O NOME DO USUÁRIO:\n>>>")
+                        nome = input("DIGITE O NOME DO USUÁRIO: ")
                         exemplo.buscar_usuario(nome)
                         input("Aperte enter para continuar...")
                     elif opcao == "6":
                         print("VOLTAR AO MENU ANTERIOR...")
                         break
                     else:
-                        print("😡 OPÇÃO INVÁLIDA. TENTE NOVAMENTE!")
+                        print("OPÇÃO INVÁLIDA. TENTE NOVAMENTE!")
             case 5:
-                print("🚀 SAINDO...")
+                print("SAINDO...")
                 break
             case __:
-                print("😡 OPÇÃO INVÁLIDA. TENTE NOVAMENTE!")
+                print("OPÇÃO INVÁLIDA. TENTE NOVAMENTE!")
 
 
 if __name__ == "__main__":

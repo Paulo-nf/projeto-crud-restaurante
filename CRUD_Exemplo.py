@@ -1,9 +1,12 @@
 import json
 import os
+from cor import Cor
 
 # Definindo o caminho do arquivo no escopo global
 arquivo = os.path.join(os.path.dirname(__file__), 'exemplo.json')
 
+def linha_horizontal():
+    print(Cor.LINHA + "=" * 55 + Cor.RESET)
 
 def carregar_usuarios():
     # Verifica se o arquivo existe, se não existir, cria um arquivo com lista vazia
@@ -16,7 +19,7 @@ def carregar_usuarios():
         return json.load(f)
 
 def menu():
-    return """MENU:
+    print(Cor.TEXTO + """MENU:
 
     1. ADICIONAR USUÁRIO
     2. LISTAR USUÁRIOS
@@ -24,7 +27,7 @@ def menu():
     4. EXCLUIR USUÁRIO
     5. LISTAR UM USUÁRIO
     6. VOLTAR AO MENU ANTERIOR
-"""
+""" + Cor.RESET)
 
 def adicionar_usuario(nome, idade):
     usuarios = carregar_usuarios()
@@ -33,22 +36,18 @@ def adicionar_usuario(nome, idade):
 
     with open(arquivo, 'w') as f:
         json.dump(usuarios, f, indent=4, ensure_ascii=False)
-    print("😎 USUÁRIO ADICIONADO COM SUCESSO!")
+    print("USUÁRIO ADICIONADO COM SUCESSO!")
 
 def listar_usuarios():
     usuarios = carregar_usuarios()
 
     if usuarios:
-        print("=" *50)
-        print("LISTA DE USUÁRIOS:")
-        print("-" *50)
+        linha_horizontal()
         for usuario in usuarios:
-            print("*" *50)
             print(f"NOME: {usuario['nome']}, IDADE: {usuario['idade']}")
-            print("*" *50)
-            print("=" *50)
+            print("*" *55)
     else:
-        print("😒 NENHUM USUÁRIO CADASTRADO.")
+        print("NENHUM USUÁRIO CADASTRADO.")
 
 def atualizar_usuario(nome_antigo, novo_nome, nova_idade):
     usuarios = carregar_usuarios()
@@ -61,7 +60,7 @@ def atualizar_usuario(nome_antigo, novo_nome, nova_idade):
 
     with open(arquivo, 'w') as f:
         json.dump(usuarios, f, indent=4, ensure_ascii=False)
-    print("😙 USUÁRIO ATUALIZADO COM SUCESSO!")
+    print("USUÁRIO ATUALIZADO COM SUCESSO!")
 
 def excluir_usuario(nome):
     usuarios = carregar_usuarios()
@@ -72,7 +71,7 @@ def excluir_usuario(nome):
 
     with open(arquivo, 'w') as f:
         json.dump(usuarios, f, indent=4, ensure_ascii=False)
-    print("😡 USUÁRIO EXCLUÍDO COM SUCESSO!")
+    print("USUÁRIO EXCLUÍDO COM SUCESSO!")
 
 def buscar_usuario(nome):
     usuarios = carregar_usuarios()
@@ -84,4 +83,4 @@ def buscar_usuario(nome):
             print(f"NOME: {usuario['nome']}, IDADE: {usuario['idade']}")
             encontrado = True
     if not encontrado:
-        print("😒 NENHUM USUÁRIO CADASTRADO.")
+        print("NENHUM USUÁRIO CADASTRADO.")
