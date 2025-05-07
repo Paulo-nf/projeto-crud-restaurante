@@ -1,8 +1,9 @@
 import json
 import os
+import cor
 
 # Definindo o caminho do arquivo no escopo global
-arquivo = os.path.join(os.path.dirname(__file__), 'usuarios.json')
+arquivo = os.path.join(os.path.dirname(__file__), 'exemplo.json')
 
 
 def carregar_usuarios():
@@ -14,12 +15,6 @@ def carregar_usuarios():
     # Carrega o conteúdo do arquivo
     with open(arquivo, 'r') as f:
         return json.load(f)
-
-class cor:
-    VERMELHO = '\033[91m'
-    VERDE = '\033[92m'
-    AZUL = '\033[94m'
-    RESET = '\033[0m'
 
 def exibir_menu():
     print(cor.AZUL + "MENU:")
