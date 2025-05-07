@@ -16,9 +16,6 @@ def main():
             2 - Remover Prato
             3 - Mudar numero de mesas (mostra numero de mesas atual)
             4 - Alter status de mesa
-            4.1 - Para Disponivel
-            4.2 - Para Ocupada
-            4.3 - Para Reservada
             5 - Cadastrar pedido
             6 - Alterar pedido
             7 - Remover pedido
