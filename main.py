@@ -33,23 +33,32 @@ def main():
 
         match (opcao_inicial):
             case 1:
-                print("em desenvolvimento c:")
+                # aqui vai ser crud de mesas
+                pass
+            case 2:
+                # aqui vai ser crud de pratos
+                pass
+            case 3:
+                # aqui var ser crud de pedidos
+                pass
             case 4:
                 while True:
+                    limpar_terminal()
                     exemplo.exibir_menu()
                     linha_horizontal(cor.CIANO)
-                    opcao = input("INFORME SUA OPÇÃO:\n>>>")
+                    opcao = input("INFORME SUA OPÇÃO: ")
 
                     if opcao == "1":
-                        nome = input(" DIGITE O NOME:\n>>>")
-                        idade = input(" DIGITE A IDADE:\n>>>")
+                        nome = input("DIGITE O NOME: ")
+                        idade = input("DIGITE A IDADE: ")
                         exemplo.adicionar_usuario(nome, idade)
                     elif opcao == "2":
                         exemplo.listar_usuarios()
+                        input("Aperte enter para continuar...")
                     elif opcao == "3":
-                        nome_antigo = input("DIGITE O NOME A SER ATUALIZADO:\n>>>")
-                        novo_nome = input("DIGITE O NOVO NOME:\n>>>")
-                        nova_idade = input("DIGITE A NOVA IDADE:\n>>>")
+                        nome_antigo = input("DIGITE O NOME A SER ATUALIZADO: ")
+                        novo_nome = input("DIGITE O NOVO NOME: ")
+                        nova_idade = input("DIGITE A NOVA IDADE: ")
                         exemplo.atualizar_usuario(nome_antigo, novo_nome, nova_idade)
                     elif opcao == "4":
                         nome = input("DIGITE O NOME DO USUÁRIO A SER EXCLUÍDO:\n>>>")
@@ -57,6 +66,7 @@ def main():
                     elif opcao == "5":
                         nome = input("DIGITE O NOME DO USUÁRIO:\n>>>")
                         exemplo.buscar_usuario(nome)
+                        input("Aperte enter para continuar...")
                     elif opcao == "6":
                         print("VOLTAR AO MENU ANTERIOR...")
                         break
