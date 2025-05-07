@@ -1,6 +1,5 @@
 import json
 import os
-import cor
 
 # Definindo o caminho do arquivo no escopo global
 arquivo = os.path.join(os.path.dirname(__file__), 'exemplo.json')
@@ -16,16 +15,16 @@ def carregar_usuarios():
     with open(arquivo, 'r') as f:
         return json.load(f)
 
-def exibir_menu():
-    print(cor.AZUL + "MENU:")
-    print("""
+def menu():
+    return """MENU:
+
     1. ADICIONAR USUÁRIO
     2. LISTAR USUÁRIOS
     3. ATUALIZAR USUÁRIO
     4. EXCLUIR USUÁRIO
     5. LISTAR UM USUÁRIO
     6. VOLTAR AO MENU ANTERIOR
-""" + cor.RESET)
+"""
 
 def adicionar_usuario(nome, idade):
     usuarios = carregar_usuarios()

@@ -1,6 +1,11 @@
 import CRUD_Exemplo as exemplo
-import cor
 import os
+
+class cor:
+    TEXTO = '\033[94m'
+    LINHA = '\033[96m'
+    RESET = '\033[0m' # reseta cor no terminal
+
 
 def linha_horizontal(cor_linha):
     print(cor_linha + "=" * 55 + cor.RESET)
@@ -11,8 +16,8 @@ def limpar_terminal():
 
 def menu_inicial():
     limpar_terminal()
-    linha_horizontal(cor.CIANO)
-    print(cor.AZUL + "BEM VINDO AO SISTEMA RESTAURANTE SOLUTIONS™")
+    linha_horizontal(cor.LINHA)
+    print(cor.TEXTO + "BEM VINDO AO SISTEMA RESTAURANTE SOLUTIONS™")
     print("""
     1 - MÓDULO MESAS
     2 - MÓDULO PRATOS
@@ -26,10 +31,10 @@ def main():
     while True:
         limpar_terminal()
         menu_inicial()
-        linha_horizontal(cor.CIANO)
+        linha_horizontal(cor.LINHA)
         opcao_inicial = int(input("INFORME SUA OPÇÃO: "))
         limpar_terminal()
-        linha_horizontal(cor.CIANO)
+        linha_horizontal(cor.LINHA)
 
         match (opcao_inicial):
             case 1:
@@ -44,9 +49,9 @@ def main():
             case 4:
                 while True:
                     limpar_terminal()
-                    linha_horizontal(cor.CIANO)
-                    exemplo.exibir_menu()
-                    linha_horizontal(cor.CIANO)
+                    linha_horizontal(cor.LINHA)
+                    print(cor.TEXTO + exemplo.menu() + cor.RESET)
+                    linha_horizontal(cor.LINHA)
                     opcao = input("INFORME SUA OPÇÃO: ")
 
                     if opcao == "1":
