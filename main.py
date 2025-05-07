@@ -44,6 +44,7 @@ def main():
             case 4:
                 while True:
                     limpar_terminal()
+                    linha_horizontal(cor.CIANO)
                     exemplo.exibir_menu()
                     linha_horizontal(cor.CIANO)
                     opcao = input("INFORME SUA OPÇÃO: ")
