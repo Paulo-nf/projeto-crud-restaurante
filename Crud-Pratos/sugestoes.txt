@@ -1,0 +1,23 @@
+precisa ajeitar:
+-criar novo prato não deveria aceita preço negativo
+-na linha 50, falta passar "pratos" na função salvar_pratos()
+-a função fazer_pedido() era pra ficar na CRUD de pedidos, mas não apaga que vai ser útil pra quem ta fazendo
+o CRUD de pedidos
+
+detalhes que podia melhorar:
+-na linha 24, mudar a string pra terminar com ": " pra ficar mais legivel no terminal
+-colocar os acentos em inválida e inválido
+-mudar o nome da váriavel ARQUIVO pra algo mais significativo, "ARQUIVO_DOS_PRATOS" ou "PRATOS_JSON" como exemplo
+-renomear função lista_pratos() para listar_pratos() e cria_novo_prato() para criar_novo_prato()
+-na função cria_novo_prato(), ínves de aceitar salvar qualquer string em "categoria", fazer uma lista com as possiveis
+categorias que podem ser aceitas:
+
+´´´
+POSSIVEIS_CATEGORIAS = ["Principal", "Bebida", "Bebida alcoólica", "Entrada", "Sobremesa"]
+    categoria=input("Qual é a categoria do prato? Exemplos: Principal,Bebida,Bebida alcoólica,Entrada e Sobremesa.")
+    # muda a primeira letra pra ser maiscúla e o resto minúscula
+    categoria = categoria.capitalize()
+    if categoria not in POSSIVEIS_CATEGORIAS:
+        print("Categoria inválida")
+        return
+´´´
