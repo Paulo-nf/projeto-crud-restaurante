@@ -1,19 +1,13 @@
 import CRUD_Exemplo as exemplo
 import os
-from cor import Cor
-
-def linha_horizontal():
-    print(Cor.LINHA + "=" * 55 + Cor.RESET)
-
-def limpar_terminal():
-    os.system('cls' if os.name == 'nt' else 'clear')
+import terminal_bonito
 
 
 def menu_inicial():
-    limpar_terminal()
-    linha_horizontal()
-    print(Cor.TEXTO + "BEM VINDO AO SISTEMA RESTAURANTE SOLUTIONS™")
-    print("""
+    terminal_bonito.limpar_terminal()
+    terminal_bonito.linha_horizontal()
+    terminal_bonito.print_bonito("BEM VINDO AO SISTEMA RESTAURANTE SOLUTIONS™")
+    terminal_bonito.print_bonito("""
     1 - MÓDULO MESAS
     2 - MÓDULO PRATOS
     3 - MÓDULO PEDIDOS
@@ -24,13 +18,13 @@ def menu_inicial():
 def main():
 
     while True:
-        limpar_terminal()
+        terminal_bonito.limpar_terminal()
         menu_inicial()
-        linha_horizontal()
-        opcao_inicial = int(input(Cor.TEXTO + "INFORME SUA OPÇÃO: " + Cor.RESET))
-        limpar_terminal()
+        terminal_bonito.linha_horizontal()
+        opcao_inicial = int(terminal_bonito.input_bonito("INFORME SUA OPÇÃO: "))
+        terminal_bonito.limpar_terminal()
 
-        linha_horizontal()
+        terminal_bonito.linha_horizontal()
 
         match opcao_inicial:
             case 1:
@@ -44,11 +38,11 @@ def main():
                 pass
             case 4:
                 while True:
-                    limpar_terminal()
-                    linha_horizontal()
+                    terminal_bonito.limpar_terminal()
+                    terminal_bonito.linha_horizontal()
                     exemplo.menu()
-                    linha_horizontal()
-                    opcao = input(Cor.TEXTO + "INFORME SUA OPÇÃO: " + Cor.RESET)
+                    terminal_bonito.linha_horizontal()
+                    opcao = terminal_bonito.input_bonito("INFORME SUA OPÇÃO: ")
 
                     if opcao == "1":
                         nome = input("DIGITE O NOME: ")

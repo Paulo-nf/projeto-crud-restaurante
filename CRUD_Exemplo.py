@@ -1,12 +1,10 @@
 import json
 import os
 from cor import Cor
+import terminal_bonito
 
 # Definindo o caminho do arquivo no escopo global
 arquivo = os.path.join(os.path.dirname(__file__), 'exemplo.json')
-
-def linha_horizontal():
-    print(Cor.LINHA + "=" * 55 + Cor.RESET)
 
 def carregar_usuarios():
     # Verifica se o arquivo existe, se não existir, cria um arquivo com lista vazia
@@ -42,7 +40,7 @@ def listar_usuarios():
     usuarios = carregar_usuarios()
 
     if usuarios:
-        linha_horizontal()
+        terminal_bonito.linha_horizontal()
         for usuario in usuarios:
             print(f"NOME: {usuario['nome']}, IDADE: {usuario['idade']}")
             print("*" *55)
