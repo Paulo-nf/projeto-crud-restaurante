@@ -3,6 +3,7 @@ precisa ajeitar:
 -na linha 50, falta passar "pratos" na função salvar_pratos()
 -a função fazer_pedido() era pra ficar na CRUD de pedidos, mas não apaga que vai ser útil pra quem ta fazendo
 o CRUD de pedidos
+-pratos devem ter descrição e dizer quais ingredientes tem
 
 detalhes que podia melhorar:
 -a linha 3 não faz nada
