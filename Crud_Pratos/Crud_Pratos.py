@@ -1,17 +1,18 @@
 import json
 import os
 possiveis_categ = str
-ARQUIVO_PRATOS = 'pratos.json'
+
+arquivo = os.path.join(os.path.dirname(__file__), 'pratos.json')
 
 def carregar_pratos():
-    if not os.path.exists(ARQUIVO_PRATOS):
-        with open(ARQUIVO_PRATOS, 'w') as f:
+    if not os.path.exists(arquivo):
+        with open(arquivo, 'w') as f:
             json.dump([], f)
-    with open(ARQUIVO_PRATOS, 'r') as f:
+    with open(arquivo, 'r') as f:
         return json.load(f)
 
 def salvar_pratos(pratos):
-    with open(ARQUIVO_PRATOS,"w") as f:
+    with open(arquivo,"w") as f:
         json.dump(pratos, f, indent=4, ensure_ascii=False)
 
 def criar_novo_prato():

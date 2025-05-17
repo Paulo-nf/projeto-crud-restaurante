@@ -1,6 +1,7 @@
 import CRUD_Exemplo as exemplo
 import os
 import terminal_bonito
+from Crud_Pratos import Crud_Pratos as pratos
 
 
 def menu_inicial():
@@ -31,8 +32,7 @@ def main():
                 # aqui vai ser crud de mesas
                 pass
             case 2:
-                # aqui vai ser crud de pratos
-                pass
+                pratos.menu()
             case 3:
                 # aqui var ser crud de pedidos
                 pass

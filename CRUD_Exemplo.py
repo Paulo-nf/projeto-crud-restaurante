@@ -1,6 +1,5 @@
 import json
 import os
-from cor import Cor
 import terminal_bonito
 
 # Definindo o caminho do arquivo no escopo global
@@ -17,7 +16,7 @@ def carregar_usuarios():
         return json.load(f)
 
 def menu():
-    print(Cor.TEXTO + """MENU:
+    terminal_bonito.print_bonito("""MENU:
 
     1. ADICIONAR USUÁRIO
     2. LISTAR USUÁRIOS
@@ -25,7 +24,7 @@ def menu():
     4. EXCLUIR USUÁRIO
     5. LISTAR UM USUÁRIO
     6. VOLTAR AO MENU ANTERIOR
-""" + Cor.RESET)
+""")
 
 def adicionar_usuario(nome, idade):
     usuarios = carregar_usuarios()
