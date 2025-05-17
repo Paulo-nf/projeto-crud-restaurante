@@ -95,7 +95,7 @@ def fazer_pedido():
             try:
                 quant = int(input("Quantidade: "))
                 preco = pratos[escolha - 1]['preco']
-                valor = preco * quant 
+                valor = preco * quant
                 valortotal += valor
                 print(f" {quant}x {pratos[escolha - 1]['nome']} adicionados! Subtotal: R${valor:.2f}")
             except ValueError:
