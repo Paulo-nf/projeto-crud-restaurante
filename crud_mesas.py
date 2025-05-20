@@ -1,7 +1,9 @@
+# falta ter uma opção pra deixar quem ta rodando o programa dizer quantas mesas é pra ter invés de sempre ser 10, e um detalhe pra salvar o json num lugar ideal quando tiver com o resto do código.
+
 import json
 import os
 
-NOME_DO_ARQUIVO = "mesas.json"
+NOME_DO_ARQUIVO = "dados/mesas.json"
 TOTAL_MESAS = 10 
 
 def carregar_mesas():

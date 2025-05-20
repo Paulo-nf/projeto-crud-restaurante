@@ -1,8 +1,32 @@
+# precisa ajeitar:
+# -criar novo prato não deveria aceita preço negativo
+# -na linha 50, falta passar "pratos" na função salvar_pratos()
+# -a função fazer_pedido() era pra ficar na CRUD de pedidos, mas não apaga que vai ser útil pra quem ta fazendo
+# o CRUD de pedidos
+# -pratos devem ter descrição e dizer quais ingredientes tem
+#
+# detalhes que podia melhorar:
+# -a linha 3 não faz nada
+# -colocar os acentos em inválida e inválido
+# -na função cria_novo_prato(), ínves de aceitar salvar qualquer string em "categoria", fazer uma lista com as possiveis
+# categorias que podem ser aceitas:
+#
+# ´´´
+# POSSIVEIS_CATEGORIAS = ["Aperitivos", "Prato Principal", "Sobremesa", "Bebidas", "Bebida alcoólica"]
+#     categoria=input("Qual é a categoria do prato? (Aperitivos|Prato Principal|Sobremesa|Bebidas|Bebidas Alcoólica|): ")
+#     # muda a primeira letra pra ser maiscúla e o resto minúscula
+#     categoria = categoria.capitalize()
+#     if categoria not in POSSIVEIS_CATEGORIAS:
+#         print("Categoria inválida")
+#         return
+# ´´´
+
+
 import json
 import os
 possiveis_categ = str
 
-arquivo = os.path.join(os.path.dirname(__file__), 'pratos.json')
+arquivo = os.path.join(os.path.dirname(__file__), 'dados/pratos.json')
 
 def carregar_pratos():
     if not os.path.exists(arquivo):
