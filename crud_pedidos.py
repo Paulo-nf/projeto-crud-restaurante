@@ -1,4 +1,4 @@
-# checar se o numero da mesa existe
+# checar se o numero da mesa existe antes de atribuir um pedido a ela
 import json
 import os
 from datetime import datetime
