@@ -1,5 +1,4 @@
 # -criar novo prato não deveria aceita preço negativo
-# o CRUD de pedidos
 # -pratos devem ter descrição e dizer quais ingredientes tem
 # -na função cria_novo_prato(), ínves de aceitar salvar qualquer string em "categoria", fazer uma lista com as possiveis
 # categorias que podem ser aceitas:
