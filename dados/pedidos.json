@@ -8,7 +8,19 @@
                 "observacao": ""
             }
         ],
-        "status": "em preparo",
+        "status": "entregue",
         "horario": "2025-05-20 16:29:20"
+    },
+    "2": {
+        "mesa": 1213,
+        "itens": [
+            {
+                "id_cardapio": 1,
+                "quantidade": 1,
+                "observacao": ""
+            }
+        ],
+        "status": "em preparo",
+        "horario": "2025-05-21 07:54:08"
     }
 }

@@ -1,107 +1,109 @@
-# falta ter uma opção pra deixar quem ta rodando o programa dizer quantas mesas é pra ter invés de sempre ser 10, e um detalhe pra salvar o json num lugar ideal quando tiver com o resto do código.
+# falta ter uma opção pra deixar quem ta rodando o programa dizer quantas mesas é pra ter invés de sempre ser 10
 
 import json
 import os
+import terminal_bonito
 
-NOME_DO_ARQUIVO = "dados/mesas.json"
+arquivo = os.path.join(os.path.dirname(__file__), 'dados/mesas.json')
+
 TOTAL_MESAS = 10 
 
 def carregar_mesas():
-    if not os.path.exists(NOME_DO_ARQUIVO):
+    if not os.path.exists(arquivo):
         mesas_iniciais = {str(i): "disponível" for i in range(1, TOTAL_MESAS + 1)}
-        with open(NOME_DO_ARQUIVO, 'w') as f:
+        with open(arquivo, 'w') as f:
             json.dump(mesas_iniciais, f, indent=4, ensure_ascii=False)
-    with open(NOME_DO_ARQUIVO, 'r') as f:
+    with open(arquivo, 'r') as f:
         return json.load(f)
 
 def salvar_mesas(mesas):
-    with open(NOME_DO_ARQUIVO, 'w') as f:
+    with open(arquivo, 'w') as f:
         json.dump(mesas, f, indent=4, ensure_ascii=False)
 
 def mostrar_mesas():
     mesas = carregar_mesas()
-    print("\nStatus de todas as mesas:")
+    terminal_bonito.print_bonito("\nStatus de todas as mesas:")
     for num, status in mesas.items():
-        print(f" Mesa {num}: {status.capitalize()}")
+        terminal_bonito.print_bonito(f" Mesa {num}: {status.capitalize()}")
     print()
 
 def mostrar_mesas_disponiveis():
     mesas = carregar_mesas()
     disponiveis = [num for num, status in mesas.items() if status == "disponível"]
-    print("\nMesas disponíveis:")
+    terminal_bonito.print_bonito("\nMesas disponíveis:")
     if disponiveis:
-        print(" - " + ", ".join(disponiveis))
+        terminal_bonito.print_bonito(" - " + ", ".join(disponiveis))
     else:
-        print("Nenhuma mesa disponível no momento.")
+        terminal_bonito.print_bonito("Nenhuma mesa disponível no momento.")
     print()
 
 def mostrar_mesas_reservadas():
     mesas = carregar_mesas()
     reservadas = [num for num, status in mesas.items() if status == "reservada"]
-    print("\nMesas reservadas:")
+    terminal_bonito.print_bonito("\nMesas reservadas:")
     if reservadas:
-        print(" - " + ", ".join(reservadas))
+        terminal_bonito.print_bonito(" - " + ", ".join(reservadas))
     else:
-        print("Nenhuma mesa reservada no momento.")
+        terminal_bonito.print_bonito("Nenhuma mesa reservada no momento.")
     print()
 
 def mostrar_mesas_ocupadas():
     mesas = carregar_mesas()
     ocupadas = [num for num, status in mesas.items() if status == "ocupada"]
-    print("\nMesas ocupadas:")
+    terminal_bonito.print_bonito("\nMesas ocupadas:")
     if ocupadas:
-        print(" - " + ", ".join(ocupadas))
+        terminal_bonito.print_bonito(" - " + ", ".join(ocupadas))
     else:
-        print("Nenhuma mesa ocupada no momento.")
+        terminal_bonito.print_bonito("Nenhuma mesa ocupada no momento.")
     print()
 
 def reservar_mesa():
     mesas = carregar_mesas()
     mostrar_mesas_disponiveis()
-    mesa = input("Digite o número da mesa para reservar: ")
+    mesa = terminal_bonito.input_bonito("Digite o número da mesa para reservar: ")
     if mesas.get(mesa) == "disponível":
         mesas[mesa] = "reservada"
-        print(f"Mesa {mesa} reservada com sucesso.")
+        terminal_bonito.print_bonito(f"Mesa {mesa} reservada com sucesso.")
     else:
-        print("Mesa não está disponível para reserva.")
+        terminal_bonito.print_bonito("Mesa não está disponível para reserva.")
     salvar_mesas(mesas)
 
 def ocupar_mesa():
     mesas = carregar_mesas()
     mostrar_mesas()
-    mesa = input("Digite o número da mesa para ocupar: ")
+    mesa = terminal_bonito.input_bonito("Digite o número da mesa para ocupar: ")
     if mesas.get(mesa) in ["disponível", "reservada"]:
         mesas[mesa] = "ocupada"
-        print(f"Mesa {mesa} agora está ocupada.")
+        terminal_bonito.print_bonito(f"Mesa {mesa} agora está ocupada.")
     else:
-        print("Mesa já está ocupada ou é inválida.")
+        terminal_bonito.print_bonito("Mesa já está ocupada ou é inválida.")
     salvar_mesas(mesas)
 
 def liberar_mesa():
     mesas = carregar_mesas()
     mostrar_mesas_ocupadas()
-    mesa = input("Digite o número da mesa para liberar: ")
+    mesa = terminal_bonito.input_bonito("Digite o número da mesa para liberar: ")
     if mesas.get(mesa) == "ocupada":
         mesas[mesa] = "disponível"
-        print(f"Mesa {mesa} foi liberada com sucesso.")
+        terminal_bonito.print_bonito(f"Mesa {mesa} foi liberada com sucesso.")
     else:
-        print("Essa mesa não está ocupada ou é inválida.")
+        terminal_bonito.print_bonito("Essa mesa não está ocupada ou é inválida.")
     salvar_mesas(mesas)
 
 def excluir_reserva():
     mesas = carregar_mesas()
     mostrar_mesas_reservadas()
-    mesa = input("Digite o número da mesa para excluir a reserva: ")
+    mesa = terminal_bonito.input_bonito("Digite o número da mesa para excluir a reserva: ")
     if mesas.get(mesa) == "reservada":
         mesas[mesa] = "disponível"
-        print(f"Reserva da mesa {mesa} excluída.")
+        terminal_bonito.print_bonito(f"Reserva da mesa {mesa} excluída.")
     else:
-        print("Essa mesa não está reservada.")
+        terminal_bonito.print_bonito("Essa mesa não está reservada.")
     salvar_mesas(mesas)
 
 def menu():
     while True:
-        print("""
+        terminal_bonito.print_bonito("""
 ===== MENU =====
 1. Mostrar status de todas as mesas
 2. Mostrar apenas mesas disponíveis
@@ -113,7 +115,7 @@ def menu():
 8. Liberar mesa ocupada
 9. Sair do sistema
 """)
-        opcao = input("Escolha uma opção: ")
+        opcao = terminal_bonito.input_bonito("Escolha uma opção: ")
         if opcao == "1":
             mostrar_mesas()
         elif opcao == "2":
@@ -131,10 +133,10 @@ def menu():
         elif opcao == "8":
             liberar_mesa()
         elif opcao == "9":
-            print("Saindo do sistema...")
+            terminal_bonito.print_bonito("Saindo do sistema...")
             break
         else:
-            print("Opção inválida. Tente novamente.")
+            terminal_bonito.print_bonito("Opção inválida. Tente novamente.")
 
 # Iniciar o programa
 if __name__ == "__main__":

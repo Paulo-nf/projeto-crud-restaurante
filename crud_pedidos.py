@@ -1,10 +1,12 @@
+# checar se o numero da mesa existe
 import json
 import os
 from datetime import datetime
+import terminal_bonito
 
-ARQ_PEDIDOS = 'dados/pedidos.json'
-ARQ_CARDAPIO = 'dados/cardapio.json'
-ARQ_MESAS = 'dados/mesas.json'
+arquivo_pedidos = os.path.join(os.path.dirname(__file__), 'dados/pedidos.json')
+arquivo_cardapio = os.path.join(os.path.dirname(__file__), 'dados/cardapio.json')
+arquivo_mesas = os.path.join(os.path.dirname(__file__), 'dados/mesas.json')
 
 def carregar_json(caminho):
     if os.path.exists(caminho):
@@ -19,35 +21,28 @@ def salvar_json(dados, caminho):
 def verificar_item_cardapio(cardapio, id_item):
     return str(id_item) in cardapio
 
-def mesa_disponivel(mesas, id_mesa):
-    return mesas.get(str(id_mesa), {}).get("status") == "livre"
-
 def ocupar_mesa(mesas, id_mesa):
-    mesas[str(id_mesa)] = {"status": "ocupada"}
-    salvar_json(mesas, ARQ_MESAS)
+    mesas[str(id_mesa)] = "ocupada"
+    salvar_json(mesas, arquivo_mesas)
 
 def criar_pedido():
-    pedidos = carregar_json(ARQ_PEDIDOS)
-    cardapio = carregar_json(ARQ_CARDAPIO)
-    mesas = carregar_json(ARQ_MESAS)
+    pedidos = carregar_json(arquivo_pedidos)
+    cardapio = carregar_json(arquivo_cardapio)
+    mesas = carregar_json(arquivo_mesas)
 
-    id_mesa = input("Número da mesa: ")
-
-    if not mesa_disponivel(mesas, id_mesa):
-        print("Mesa ocupada ou inexistente.")
-        return
+    id_mesa = terminal_bonito.input_bonito("Número da mesa: ")
 
     itens = []
     while True:
-        id_item = input("ID do item do cardápio (0 para sair): ")
+        id_item = terminal_bonito.input_bonito("ID do item do cardápio (0 para sair): ")
         if id_item == '0':
             break
         if not verificar_item_cardapio(cardapio, id_item):
-            print("Item inválido.")
+            terminal_bonito.print_bonito("Item inválido.")
             continue
 
-        quantidade = int(input("Quantidade: "))
-        obs = input("Observação (opcional): ")
+        quantidade = int(terminal_bonito.input_bonito("Quantidade: "))
+        obs = terminal_bonito.input_bonito("Observação (opcional): ")
 
         itens.append({
             "id_cardapio": int(id_item),
@@ -56,7 +51,7 @@ def criar_pedido():
         })
 
     if not itens:
-        print("Pedido vazio. Cancelado.")
+        terminal_bonito.print_bonito("Pedido vazio. Cancelado.")
         return
 
     novo_id = str(max([int(k) for k in pedidos] + [0]) + 1)
@@ -68,23 +63,23 @@ def criar_pedido():
     }
 
     ocupar_mesa(mesas, id_mesa)
-    salvar_json(pedidos, ARQ_PEDIDOS)
-    print(f"Pedido {novo_id} criado com sucesso.")
+    salvar_json(pedidos, arquivo_pedidos)
+    terminal_bonito.print_bonito(f"Pedido {novo_id} criado com sucesso.")
 
 def listar_pedidos():
-    pedidos = carregar_json(ARQ_PEDIDOS)
-    cardapio = carregar_json(ARQ_CARDAPIO)
+    pedidos = carregar_json(arquivo_pedidos)
+    cardapio = carregar_json(arquivo_cardapio)
 
     if not pedidos:
-        print("Nenhum pedido encontrado.")
+        terminal_bonito.print_bonito("Nenhum pedido encontrado.")
         return
 
     for pid, pedido in pedidos.items():
-        print(f"\nPedido ID: {pid}")
-        print(f" Mesa: {pedido['mesa']}")
-        print(f" Status: {pedido['status']}")
-        print(f" Horário: {pedido['horario']}")
-        print(" Itens:")
+        terminal_bonito.print_bonito(f"\nPedido ID: {pid}")
+        terminal_bonito.print_bonito(f" Mesa: {pedido['mesa']}")
+        terminal_bonito.print_bonito(f" Status: {pedido['status']}")
+        terminal_bonito.print_bonito(f" Horário: {pedido['horario']}")
+        terminal_bonito.print_bonito(" Itens:")
         total = 0
         for item in pedido['itens']:
             id_item = str(item["id_cardapio"])
@@ -92,43 +87,43 @@ def listar_pedidos():
             preco = cardapio.get(id_item, {}).get("preco", 0.0)
             subtotal = preco * item["quantidade"]
             total += subtotal
-            print(f"  - {nome} x{item['quantidade']} (R${subtotal:.2f}) - {item['observacao']}")
-        print(f" Total: R${total:.2f}")
-        print("-" * 40)
+            terminal_bonito.print_bonito(f"  - {nome} x{item['quantidade']} (R${subtotal:.2f}) - {item['observacao']}")
+        terminal_bonito.print_bonito(f" Total: R${total:.2f}")
+        terminal_bonito.linha_horizontal()
 
 def atualizar_status_pedido():
-    pedidos = carregar_json(ARQ_PEDIDOS)
+    pedidos = carregar_json(arquivo_pedidos)
     if not pedidos:
-        print("Nenhum pedido encontrado.")
+        terminal_bonito.print_bonito("Nenhum pedido encontrado.")
         return
 
-    id_pedido = input("ID do pedido a atualizar: ")
+    id_pedido = terminal_bonito.input_bonito("ID do pedido a atualizar: ")
     if id_pedido not in pedidos:
-        print("Pedido não encontrado.")
+        terminal_bonito.print_bonito("Pedido não encontrado.")
         return
 
-    print("Status atual:", pedidos[id_pedido]["status"])
-    print("1 - Em preparo")
-    print("2 - Pronto")
-    print("3 - Entregue")
-    opcao = input("Novo status (1-3): ")
+    terminal_bonito.print_bonito("Status atual:" + "\n" + pedidos[id_pedido]["status"])
+    terminal_bonito.print_bonito("1 - Em preparo")
+    terminal_bonito.print_bonito("2 - Pronto")
+    terminal_bonito.print_bonito("3 - Entregue")
+    opcao = terminal_bonito.input_bonito("Novo status (1-3): ")
 
     status_map = {"1": "em preparo", "2": "pronto", "3": "entregue"}
     if opcao in status_map:
         pedidos[id_pedido]["status"] = status_map[opcao]
-        salvar_json(pedidos, ARQ_PEDIDOS)
-        print("Status atualizado.")
+        salvar_json(pedidos, arquivo_pedidos)
+        terminal_bonito.print_bonito("Status atualizado.")
     else:
-        print("Opção inválida.")
+        terminal_bonito.print_bonito("Opção inválida.")
 
 def menu_pedidos():
     while True:
-        print("\n=== MENU DE PEDIDOS ===")
-        print("1. Criar novo pedido")
-        print("2. Listar pedidos")
-        print("3. Atualizar status de pedido")
-        print("4. Voltar")
-        opcao = input("Escolha uma opção: ")
+        terminal_bonito.print_bonito("\n=== MENU DE PEDIDOS ===")
+        terminal_bonito.print_bonito("1. Criar novo pedido")
+        terminal_bonito.print_bonito("2. Listar pedidos")
+        terminal_bonito.print_bonito("3. Atualizar status de pedido")
+        terminal_bonito.print_bonito("4. Voltar")
+        opcao = terminal_bonito.input_bonito("Escolha uma opção: ")
 
         if opcao == '1':
             criar_pedido()
@@ -139,7 +134,7 @@ def menu_pedidos():
         elif opcao == '4':
             break
         else:
-            print("Opção inválida.")
+            terminal_bonito.print_bonito("Opção inválida.")
 
 if __name__ == "__main__":
     menu_pedidos()

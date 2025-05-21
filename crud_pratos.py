@@ -1,161 +1,121 @@
-# precisa ajeitar:
 # -criar novo prato não deveria aceita preço negativo
-# -na linha 50, falta passar "pratos" na função salvar_pratos()
-# -a função fazer_pedido() era pra ficar na CRUD de pedidos, mas não apaga que vai ser útil pra quem ta fazendo
 # o CRUD de pedidos
 # -pratos devem ter descrição e dizer quais ingredientes tem
-#
-# detalhes que podia melhorar:
-# -a linha 3 não faz nada
-# -colocar os acentos em inválida e inválido
 # -na função cria_novo_prato(), ínves de aceitar salvar qualquer string em "categoria", fazer uma lista com as possiveis
 # categorias que podem ser aceitas:
 #
 # ´´´
 # POSSIVEIS_CATEGORIAS = ["Aperitivos", "Prato Principal", "Sobremesa", "Bebidas", "Bebida alcoólica"]
-#     categoria=input("Qual é a categoria do prato? (Aperitivos|Prato Principal|Sobremesa|Bebidas|Bebidas Alcoólica|): ")
+#     categoria=terminal_bonito.input_bonito("Qual é a categoria do prato? (Aperitivos|Prato Principal|Sobremesa|Bebidas|Bebidas Alcoólica|): ")
 #     # muda a primeira letra pra ser maiscúla e o resto minúscula
 #     categoria = categoria.capitalize()
 #     if categoria not in POSSIVEIS_CATEGORIAS:
-#         print("Categoria inválida")
+#         terminal_bonito.print_bonito("Categoria inválida")
 #         return
 # ´´´
 
 
 import json
 import os
-possiveis_categ = str
+import terminal_bonito
 
-arquivo = os.path.join(os.path.dirname(__file__), 'dados/pratos.json')
+arquivo = os.path.join(os.path.dirname(__file__), 'dados/cardapio.json')
 
-def carregar_pratos():
+def carregar_cardapio():
     if not os.path.exists(arquivo):
         with open(arquivo, 'w') as f:
-            json.dump([], f)
+            json.dump({}, f)
     with open(arquivo, 'r') as f:
         return json.load(f)
 
-def salvar_pratos(pratos):
+def salvar_cardapio(cardapio):
     with open(arquivo,"w") as f:
-        json.dump(pratos, f, indent=4, ensure_ascii=False)
+        json.dump(cardapio, f, indent=4, ensure_ascii=False)
 
-def criar_novo_prato():
-    nome=input("Insira aqui o nome do novo prato a ser adicionado ao cardápio: ")
+def criar_novo_item():
+    nome=terminal_bonito.input_bonito("Insira aqui o nome do novo prato a ser adicionado ao cardápio: ")
     try:
-        preco=float(input("Insira aqui o valor do prato: "))
+        preco=float(terminal_bonito.input_bonito("Insira aqui o valor do prato: "))
     except ValueError:
-        print("Preço inválido")
+        terminal_bonito.print_bonito("Preço inválido")
         return
-    categoria=input("Qual a categoria do prato? (Aperitivos|Prato Principal|Sobremesa|Bebidas|Bebidas Alcoólica|): ")
-    pratos=carregar_pratos()
-    pratos.append({"nome":nome,"preco":preco,"categoria":categoria})
-    salvar_pratos(pratos)
-    print("Prato salvo com sucesso.")
+    categoria=terminal_bonito.input_bonito("Qual a categoria do prato? (Aperitivos|Prato Principal|Sobremesa|Bebidas|Bebidas Alcoólica|): ")
+    cardapio=carregar_cardapio()
+
+    try:
+        proximo_id = max( [int(x) for x in cardapio.keys()] ) + 1
+    except ValueError:
+        proximo_id = 1
+
+    cardapio[proximo_id]={"nome":nome,"preco":preco,"categoria":categoria}
+    salvar_cardapio(cardapio)
+    terminal_bonito.print_bonito("Prato salvo com sucesso.")
 
 def listar_pratos():
-    pratos=carregar_pratos()
-    if not pratos:
-        print("Sem pratos salvo no sistema")
+    cardapio=carregar_cardapio()
+    if not cardapio:
+        terminal_bonito.print_bonito("Sem items salvo no sistema")
         return
-    print("Pratos listados:")
-    for i,prato in enumerate(pratos,start=1):
-        print(f"{i}- {prato['nome']} | R${prato['preco']:.2f} | Categoria: {prato['categoria']}")
+    terminal_bonito.print_bonito("Items listados:")
+    for i,prato in cardapio.items():
+        terminal_bonito.print_bonito(f"{i}- {prato['nome']} | R${prato['preco']:.2f} | Categoria: {prato['categoria']}")
 
-def atualizar_prato():
-    pratos = carregar_pratos()
+def atualizar_item():
+    cardapio = carregar_cardapio()
     listar_pratos()
     try:
-        numero=int(input("Digite o número do prato que deseja atualizar: "))-1
-        if 0<=numero<len(pratos):
-            nome=input("Digite o novo nome: ")
-            preco=float(input("Digite o novo preço: "))
-            categoria=input("Digite a nova categoria: ")
-            pratos[numero]={"nome":nome,"preco":preco,"categoria":categoria}
-            salvar_pratos()
-            print("Mudança feita com sucesso")
+        numero=int(terminal_bonito.input_bonito("Digite o número do prato que deseja atualizar: "))
+        if 0<=numero<len(cardapio):
+            nome=terminal_bonito.input_bonito("Digite o novo nome: ")
+            preco=float(terminal_bonito.input_bonito("Digite o novo preço: "))
+            categoria=terminal_bonito.input_bonito("Digite a nova categoria: ")
+            cardapio[numero]={"nome":nome,"preco":preco,"categoria":categoria}
+            salvar_cardapio(cardapio)
+            terminal_bonito.print_bonito("Mudança feita com sucesso")
         else:
-            print("Numero inválido.")
+            terminal_bonito.print_bonito("Numero inválido.")
     except(ValueError,IndexError):
-        print("Entrada inválida.")
+        terminal_bonito.print_bonito("Entrada inválida.")
 
-def deletar_prato():
-    pratos = carregar_pratos()
+def deletar_item():
+    cardapio = carregar_cardapio()
     listar_pratos()
     try:
-        indice = int(input("Digite o número do prato que deseja deletar: ")) - 1
-        if 0 <= indice < len(pratos):
-            confirm = input(f"Tem certeza que deseja excluir este prato? '{pratos[indice]['nome']}'? (s/n): ").lower()
+        indice = terminal_bonito.input_bonito("Digite o número do prato que deseja deletar: ")
+        if indice in cardapio:
+            confirm = terminal_bonito.input_bonito(f"Tem certeza que deseja excluir este prato? '{cardapio[indice]['nome']}'? (s/n): ").lower()
             if confirm == 's':
-                pratos.pop(indice)
-                salvar_pratos(pratos)
-                print("Prato excluido com sucesso.")
+                del cardapio[indice]
+                salvar_cardapio(cardapio)
+                terminal_bonito.print_bonito("Prato excluido com sucesso.")
         else:
-            print("Número inválido.")
+            terminal_bonito.print_bonito("Número inválido.")
     except (ValueError, IndexError):
-        print("Entrada inválida.")
-
-def fazer_pedido():
-    pratos = carregar_pratos()
-    if not pratos:
-        print("Cardápio vazio. Adicione pratos antes de pedir.")
-        return
-
-    valortotal = 0.0
-    while True:
-        print("\nCardápio:")
-        for i, prato in enumerate(pratos, start=1):
-            print(f"{i}. {prato['nome']} | R${prato['preco']:.2f} | Categoria: {prato['categoria']}")
-        print("0. Finalizar Pedido")
-
-        try:
-            escolha = int(input("Escolha o número do prato: "))
-        except ValueError:
-            print("Entrada inválida.")
-            continue
-
-        if escolha == 0:
-            break
-
-        if 1 <= escolha <= len(pratos):
-            try:
-                quant = int(input("Quantidade: "))
-                preco = pratos[escolha - 1]['preco']
-                valor = preco * quant
-                valortotal += valor
-                print(f" {quant}x {pratos[escolha - 1]['nome']} adicionados! Subtotal: R${valor:.2f}")
-            except ValueError:
-                print("Quantidade inválida.")
-        else:
-            print("Opção inválida.")
-
-    print(f"\nValor total do pedido: R${valortotal:.2f}")
+        terminal_bonito.print_bonito("Entrada inválida.")
 
 def menu():
     while True:
-        print("\nMENU DO SISTEMA")
-        print("1. Criar prato")
-        print("2. Listar pratos")
-        print("3. Atualizar prato")
-        print("4. Deletar prato")
-        print("5. Fazer pedido")
-        print("6. Sair")
-        opcao = input("Escolha uma opção: ")
+        terminal_bonito.print_bonito("\nMENU DO SISTEMA")
+        terminal_bonito.print_bonito("1. Criar prato")
+        terminal_bonito.print_bonito("2. Listar pratos")
+        terminal_bonito.print_bonito("3. Atualizar prato")
+        terminal_bonito.print_bonito("4. Deletar prato")
+        terminal_bonito.print_bonito("5. Sair")
+        opcao = terminal_bonito.input_bonito("Escolha uma opção: ")
 
         if opcao == '1':
-            criar_novo_prato()
+            criar_novo_item()
         elif opcao == '2':
             listar_pratos()
         elif opcao == '3':
-            atualizar_prato()
+            atualizar_item()
         elif opcao == '4':
-            deletar_prato()
+            deletar_item()
         elif opcao == '5':
-            fazer_pedido()
-        elif opcao == '6':
-            print("Encerrando o sistema. Até logo!")
+            terminal_bonito.print_bonito("Encerrando o sistema. Até logo!")
             break
         else:
-            print("Opção inválida. Tente novamente.")
+            terminal_bonito.print_bonito("Opção inválida. Tente novamente.")
 
 if __name__ == '__main__':
     menu()
