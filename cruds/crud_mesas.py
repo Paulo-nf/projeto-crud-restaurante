@@ -4,7 +4,7 @@ import json
 import os
 import terminal_bonito
 
-arquivo = os.path.join(os.path.dirname(__file__), 'dados/mesas.json')
+arquivo = os.path.join(os.path.dirname(__file__), os.pardir,'dados/mesas.json')
 
 TOTAL_MESAS = 10 
 

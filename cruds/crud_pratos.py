@@ -18,7 +18,7 @@ import json
 import os
 import terminal_bonito
 
-arquivo = os.path.join(os.path.dirname(__file__), 'dados/cardapio.json')
+arquivo = os.path.join(os.path.dirname(__file__), os.pardir, 'dados/cardapio.json')
 
 def carregar_cardapio():
     if not os.path.exists(arquivo):

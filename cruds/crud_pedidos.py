@@ -4,9 +4,9 @@ import os
 from datetime import datetime
 import terminal_bonito
 
-arquivo_pedidos = os.path.join(os.path.dirname(__file__), 'dados/pedidos.json')
-arquivo_cardapio = os.path.join(os.path.dirname(__file__), 'dados/cardapio.json')
-arquivo_mesas = os.path.join(os.path.dirname(__file__), 'dados/mesas.json')
+arquivo_pedidos = os.path.join(os.path.dirname(__file__), os.pardir, 'dados/pedidos.json')
+arquivo_cardapio = os.path.join(os.path.dirname(__file__), os.pardir, 'dados/cardapio.json')
+arquivo_mesas = os.path.join(os.path.dirname(__file__), os.pardir, 'dados/mesas.json')
 
 def carregar_json(caminho):
     if os.path.exists(caminho):

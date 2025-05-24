@@ -1,8 +1,8 @@
 import os
 import terminal_bonito
-import crud_mesas as mesas
-import crud_pratos as pratos
-import crud_pedidos as pedidos
+from cruds import crud_mesas as mesas
+from cruds import crud_pratos as pratos
+from cruds import crud_pedidos as pedidos
 
 
 def menu_inicial():
@@ -18,10 +18,13 @@ def menu_inicial():
 
 def main():
 
+    entrada_invalida = False
     while True:
         terminal_bonito.limpar_terminal()
         menu_inicial()
         terminal_bonito.linha_horizontal()
+        if entrada_invalida:
+            terminal_bonito.print_bonito("OPÇÃO INVÁLIDA. TENTE NOVAMENTE!")
         opcao_inicial = int(terminal_bonito.input_bonito("INFORME SUA OPÇÃO: "))
         terminal_bonito.limpar_terminal()
 
@@ -39,7 +42,7 @@ def main():
                 print("SAINDO...")
                 break
             case __:
-                print("OPÇÃO INVÁLIDA. TENTE NOVAMENTE!")
+                entrada_invalida = True
 
 
 if __name__ == "__main__":

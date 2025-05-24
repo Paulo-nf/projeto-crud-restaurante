@@ -15,7 +15,10 @@ def input_bonito(texto):
     return input(Cor.AZUL + texto + Cor.RESET)
 
 def limpar_terminal():
+    # os.system permite escreve comandos pro terminal
     # os.name == 'nt' indica que o sistema operacional é Windows
+    # o comando 'cls' limpa o terminal no windows
+    # o comando 'clear' limpa o terminal no linux/macOS
     if os.name == 'nt':
         os.system("cls")
     else:
