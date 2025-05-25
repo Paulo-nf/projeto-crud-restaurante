@@ -1,4 +1,6 @@
 # checar se o numero da mesa existe antes de atribuir um pedido a ela
+# OBSERVAÇÃO ALTERADA PAULO
+
 import json
 import os
 from datetime import datetime
@@ -20,6 +22,9 @@ def salvar_json(dados, caminho):
 
 def verificar_item_cardapio(cardapio, id_item):
     return str(id_item) in cardapio
+    
+def verificar_mesa_existe(mesas, id_mesa):
+    return str(id_mesa) in mesas
 
 def ocupar_mesa(mesas, id_mesa):
     mesas[str(id_mesa)] = "ocupada"
@@ -30,7 +35,12 @@ def criar_pedido():
     cardapio = carregar_json(arquivo_cardapio)
     mesas = carregar_json(arquivo_mesas)
 
-    id_mesa = terminal_bonito.input_bonito("Número da mesa: ")
+   while True:
+        id_mesa = terminal_bonito.input_bonito("Número da mesa: ")
+        if verificar_mesa_existe(mesas, id_mesa):
+            break
+        else:
+            terminal_bonito.print_bonito("Número da mesa inválido. Tente novamente.")
 
     itens = []
     while True:
