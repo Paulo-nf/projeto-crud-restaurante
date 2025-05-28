@@ -1,5 +1,3 @@
-# falta ter uma opção pra deixar quem ta rodando o programa dizer quantas mesas é pra ter invés de sempre ser 10
-
 import json
 import os
 import terminal_bonito
