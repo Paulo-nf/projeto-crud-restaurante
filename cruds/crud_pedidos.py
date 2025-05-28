@@ -159,7 +159,8 @@ def menu_pedidos():
         terminal_bonito.print_bonito("1. Criar novo pedido")
         terminal_bonito.print_bonito("2. Listar pedidos")
         terminal_bonito.print_bonito("3. Atualizar status de pedido")
-        terminal_bonito.print_bonito("4. Voltar")
+        terminal_bonito.print_bonito("4. Deletar pedido")
+        terminal_bonito.print_bonito("5. Voltar")
         opcao = terminal_bonito.input_bonito("Escolha uma opção: ")
 
         if opcao == '1':
@@ -169,6 +170,8 @@ def menu_pedidos():
         elif opcao == '3':
             atualizar_status_pedido()
         elif opcao == '4':
+            deletar_pedido()
+        elif opcao == '5':
             break
         else:
             terminal_bonito.print_bonito("Opção inválida.")
