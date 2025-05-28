@@ -147,7 +147,7 @@ def deletar_pedido():
     del pedidos[id_pedido]
 
     if mesas.get(id_mesa) == "ocupada":
-        mesas[id_mesa] = "livre"
+        mesas[id_mesa] = "disponível"
 
     salvar_json(pedidos, arquivo_pedidos)
     salvar_json(mesas, arquivo_mesas)
