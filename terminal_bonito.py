@@ -2,11 +2,11 @@ import os
 
 class Cor:
     AZUL = '\033[94m'
-    LINHA = '\033[96m'
+    CIANO = '\033[96m'
     RESET = '\033[0m' # reseta Cor no terminal
 
 def linha_horizontal():
-    print(Cor.LINHA + "=" * 55 + Cor.RESET)
+    print(Cor.CIANO + "=" * 55 + Cor.RESET)
 
 def print_bonito(texto):
     print(Cor.AZUL + texto + Cor.RESET)
