@@ -123,6 +123,36 @@ def atualizar_status_pedido():
     else:
         terminal_bonito.print_bonito("Opção inválida.")
 
+def deletar_pedido():
+    pedidos = carregar_json(arquivo_pedidos)
+    mesas = carregar_json(arquivo_mesas)
+
+    if not pedidos:
+        terminal_bonito.print_bonito("Nenhum pedido encontrado.")
+        return
+
+    id_pedido = terminal_bonito.input_bonito("ID do pedido a deletar: ")
+    if id_pedido not in pedidos:
+        terminal_bonito.print_bonito("Pedido não encontrado.")
+        return
+
+    pedido = pedidos[id_pedido]
+    id_mesa = str(pedido["mesa"])
+
+    confirmar = terminal_bonito.input_bonito(f"Tem certeza que deseja deletar o pedido {id_pedido}? (s/n): ").lower()
+    if confirmar != 's':
+        terminal_bonito.print_bonito("Operação cancelada.")
+        return
+
+    del pedidos[id_pedido]
+
+    if mesas.get(id_mesa) == "ocupada":
+        mesas[id_mesa] = "livre"
+
+    salvar_json(pedidos, arquivo_pedidos)
+    salvar_json(mesas, arquivo_mesas)
+    terminal_bonito.print_bonito(f"Pedido {id_pedido} deletado com sucesso.")
+    
 def menu_pedidos():
     while True:
         terminal_bonito.print_bonito("\n=== MENU DE PEDIDOS ===")
